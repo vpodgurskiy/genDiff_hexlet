@@ -1,9 +1,22 @@
 import fs from 'fs';
 import _ from 'lodash';
+import YAML from 'js-yaml';
+import path from 'path';
 
-const genDiff = (pathToFile1, pathToFile2) => {
-  const file1 = JSON.parse(fs.readFileSync(pathToFile1, 'utf8'));
-  const file2 = JSON.parse(fs.readFileSync(pathToFile2, 'utf8'));
+const pathStructure = {
+  '.json': file => JSON.parse(file),
+  '.yml': file => YAML.safeLoad(file),
+};
+
+const parseAdapter = (file) => {
+  const pathFile = path.extname(file);
+  const parseFunction = pathStructure[pathFile];
+  return parseFunction(fs.readFileSync(file, 'utf8'));
+};
+
+const genDiff = (fileBefore, fileAfter) => {
+  const file1 = parseAdapter(fileBefore);
+  const file2 = parseAdapter(fileAfter);
   const keys1 = Object.keys(file1);
   const keys2 = Object.keys(file2);
   const allKeys = _.union(keys1, keys2);
