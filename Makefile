@@ -21,3 +21,6 @@ check-types:
 
 build:
 	npm run-script build
+
+test:
+	npm test --watchAll

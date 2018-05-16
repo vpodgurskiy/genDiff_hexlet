@@ -10,7 +10,7 @@
     "dist"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "babel-node": "babel-node",
     "flow": "flow",
     "flow-typed": "flow-typed",
@@ -47,10 +47,11 @@
     "flow-bin": "^0.57",
     "flow-typed": "^2.4.0",
     "jest": "^22",
-    "jest-cli": "^22.4.3"
+    "jest-cli": "^22.4.3"    
   },
   "dependencies": {
     "commander": "^2.15.1",
-    "readline-sync": "^1.4.9"
+    "readline-sync": "^1.4.9",
+    "lodash": "^4.17.10"
   }
 }
