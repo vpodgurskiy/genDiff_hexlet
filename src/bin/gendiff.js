@@ -10,6 +10,7 @@ program
   .arguments('<firstConfig> <secondConfig>')
   .description(`${description}`)
   .option('-f, --format [type]', 'Output format')
-  .action((firstConfig, secondConfig) => genDiff(firstConfig, secondConfig));
+  .action((firstConfig, secondConfig) => console.log(genDiff(firstConfig, secondConfig)));
 
 program.parse(process.argv);
+

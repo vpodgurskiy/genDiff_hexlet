@@ -1,25 +1,25 @@
 import fs from 'fs';
 import genDiff from '../src';
 
-const result = fs.readFileSync('__tests__/__fixtures__/result.txt', 'utf8');
+const result = '__tests__/__fixtures__/result.txt';
 
-const fileBeforeJSON = '__tests__/__fixtures__/before.json';
-const fileAfterJSON = '__tests__/__fixtures__/after.json';
+const pathToFileBeforeJSON = '__tests__/__fixtures__/before.json';
+const pathToFileAfterJSON = '__tests__/__fixtures__/after.json';
 
 test('genDiff for JSON', () => {
-  expect(genDiff(fileBeforeJSON, fileAfterJSON)).toBe(result);
+  expect(genDiff(pathToFileBeforeJSON, pathToFileAfterJSON)).toBe(fs.readFileSync(result, 'utf8'));
 });
 
-const fileBeforeYML = '__tests__/__fixtures__/before.yml';
-const fileAfterYML = '__tests__/__fixtures__/after.yml';
+const pathToFileBeforeYML = '__tests__/__fixtures__/before.yml';
+const pathToFileAfterYML = '__tests__/__fixtures__/after.yml';
 
 test('genDiff for YML', () => {
-  expect(genDiff(fileBeforeYML, fileAfterYML)).toBe(result);
+  expect(genDiff(pathToFileBeforeYML, pathToFileAfterYML)).toBe(fs.readFileSync(result, 'utf8'));
 });
 
-const fileBeforeINI = '__tests__/__fixtures__/before.ini';
-const fileAfterINI = '__tests__/__fixtures__/after.ini';
+const pathToFileBeforeINI = '__tests__/__fixtures__/before.ini';
+const pathToFileAfterINI = '__tests__/__fixtures__/after.ini';
 
 test('genDiff for INI', () => {
-  expect(genDiff(fileBeforeINI, fileAfterINI)).toBe(result);
+  expect(genDiff(pathToFileBeforeINI, pathToFileAfterINI)).toBe(fs.readFileSync(result, 'utf8'));
 });
