@@ -1,9 +1,27 @@
 ---
 
+addons:
+  code_climate:
+    repo_token:
+      secure: "h3XqAqBot/ln+OFMJptqkN9t7RszOMqzlpcjsPYBpLGHL1c4F+XrxUbDUELi8HgBW2GY+5aDCYR+MuDXWE1WuCXm/O+2bLDg4iQ04Qiq6FGNifCffaWZjaDgEM2D7I8uTTNEmfp6qaWOlUhWt6Apt+aE5K2L7xgTaqoa/EHeT4w2gGH4c3hdhrS0Wf3XCUGJB95Tbb0j7wNcWhKU1ghxJ54t5AnBryLtGvkckCdQm2xJxFigTpKNcPjTkl1M1GBKlSBDPVy9R4wecD0AJHh+sHtmaGtEznQLD5dvkrExpONBpeyBPmFeANyMFPozgvGIzkI0D7kaVg0GRrbu/wYM/8zK83zA3c+oa9+wfS5RmmodXdyuvpe1MzYQ3wRF4h3lrlqfwZB9fjPT4V/iHCnd/AZkakaNI9fJgd3UKqJitRVFzOPsJaOlbSRVmaPVGFmKJpwlAxevWCIYMeUmKC0gmACvjlYgoSaAjhjm1dNRg8bVYvwd6JD+loCacPOHNnbvskI0haY8sNS71S5Qnrf0kjMsx5zuGcL8yn/K+9QHkldEqV4LSicFXcfyepoUZFjlNdlsJ40AZwr2b77VpMV/KtEgNxJWAndDZBGLT1XI++CMqoxbPCa0AAWG/t18831RMosQLYT78d4Kz6BJHTLxmwpbHMpBpyxbPgdJhbD+ZhE="
+
 language: node_js
 node_js:
   - node
 
+  before_script:
+  - yarn global add nyc
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+  
 script:
   - make lint
   - make test
+  - bundle exec rspec
+  
+  after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+
+
+  
