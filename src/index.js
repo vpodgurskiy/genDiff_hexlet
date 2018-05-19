@@ -1,5 +1,16 @@
 import _ from 'lodash';
-import { parseFile } from './parsers';
+import fs from 'fs';
+import path from 'path';
+import getParser from './parsers';
+
+const parseFile = (pathFile) => {
+  const configPath = pathFile;
+  const ext = path.extname(configPath);
+  const data = fs.readFileSync(configPath, 'utf8');
+  const parse = getParser(ext);
+  const config = parse(data);
+  return config;
+};
 
 const genDiff = (pathFileBefore, pathFileAfter) => {
   const file1 = parseFile(pathFileBefore);
