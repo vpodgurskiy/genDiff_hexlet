@@ -13,18 +13,18 @@ export default (ast) => {
       return arr.join(`\n ${indentForObject} `);
     };
 
-    const constructStringOfValue = (value) => {
+    const stringify = (value) => {
       const objectValue = `{\n${indentForValue}${objectToString(value)}\n${indentForBrace}}`;
       const simpleValue = `${value}`;
       return value instanceof Object ? objectValue : simpleValue;
     };
 
     const constructStringOfNode = {
-      children: node => `${indent}  ${node.key}: {\n${iter(node.children, spaceCount + 4)}\n${indentForBrace}}`,
-      removed: node => `${indent}- ${node.key}: ${constructStringOfValue(node.oldValue)}`,
-      added: node => `${indent}+ ${node.key}: ${constructStringOfValue(node.newValue)}`,
-      changed: node => [`${indent}+ ${node.key}: ${constructStringOfValue(node.newValue)}\n${indent}- ${node.key}: ${constructStringOfValue(node.oldValue)}`],
-      matched: node => `${indent}  ${node.key}: ${constructStringOfValue(node.value)}`,
+      nested: node => `${indent}  ${node.key}: {\n${iter(node.children, spaceCount + 4)}\n${indentForBrace}}`,
+      removed: node => `${indent}- ${node.key}: ${stringify(node.value)}`,
+      added: node => `${indent}+ ${node.key}: ${stringify(node.newValue)}`,
+      changed: node => [`${indent}+ ${node.key}: ${stringify(node.newValue)}\n${indent}- ${node.key}: ${stringify(node.oldValue)}`],
+      matched: node => `${indent}  ${node.key}: ${stringify(node.value)}`,
     };
 
     const getNodeString = node => constructStringOfNode[node.type](node);

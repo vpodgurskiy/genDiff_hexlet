@@ -8,7 +8,7 @@ const buildAst = (fileContent1, fileContent2) => {
     if (_.isObject(fileContent1[element]) && _.isObject(fileContent2[element])) {
       return {
         key: element,
-        type: 'children',
+        type: 'nested',
         children: buildAst(fileContent1[element], fileContent2[element]),
       };
     }
@@ -24,8 +24,7 @@ const buildAst = (fileContent1, fileContent2) => {
       return {
         key: element,
         type: 'removed',
-        oldValue: fileContent1[element],
-        newValue: '',
+        value: fileContent1[element],
       };
     }
     if (fileContent1[element] === fileContent2[element]) {

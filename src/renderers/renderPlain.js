@@ -1,9 +1,10 @@
+
+const constructStringOfValue = value => (value instanceof Object ? 'complex value' : `'${value}'`);
+
 export default (ast) => {
   const iter = (data, pathToKey) => {
-    const constructStringOfValue = value => (value instanceof Object ? 'complex value' : `'${value}'`);
-
     const constructStringOfNode = {
-      children: node => iter(node.children, `${pathToKey}${node.key}.`),
+      nested: node => iter(node.children, `${pathToKey}${node.key}.`),
       removed: node => `Property '${pathToKey}${node.key}' was removed`,
       added: node => `Property '${pathToKey}${node.key}' was added with value: ${constructStringOfValue(node.newValue)}`,
       changed: node => `Property '${pathToKey}${node.key}' was updated. From ${constructStringOfValue(node.oldValue)} to ${constructStringOfValue(node.newValue)}`,
