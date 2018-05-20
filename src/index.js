@@ -14,10 +14,10 @@ const parseFile = (pathFile) => {
 };
 
 const genDiff = (pathFileBefore, pathFileAfter, type) => {
-  const file1 = parseFile(pathFileBefore);
-  const file2 = parseFile(pathFileAfter);
+  const fileContent1 = parseFile(pathFileBefore);
+  const fileContent2 = parseFile(pathFileAfter);
 
-  const ast = buildAST(file1, file2);
+  const ast = buildAST(fileContent1, fileContent2);
   const result = renderOfData(ast, type);
 
   return result;

@@ -1,45 +1,45 @@
 import _ from 'lodash';
 
-const buildAst = (file1, file2) => {
-  const keys1 = Object.keys(file1);
-  const keys2 = Object.keys(file2);
+const buildAst = (fileContent1, fileContent2) => {
+  const keys1 = Object.keys(fileContent1);
+  const keys2 = Object.keys(fileContent2);
   const allKeys = _.union(keys1, keys2);
   const ast = allKeys.map((element) => {
-    if (_.isObject(file1[element]) && _.isObject(file2[element])) {
+    if (_.isObject(fileContent1[element]) && _.isObject(fileContent2[element])) {
       return {
         key: element,
         type: 'children',
-        children: buildAst(file1[element], file2[element]),
+        children: buildAst(fileContent1[element], fileContent2[element]),
       };
     }
-    if (!_.has(file1, element)) {
+    if (!_.has(fileContent1, element)) {
       return {
         key: element,
         type: 'added',
-        oldValue: file1[element],
-        newValue: file2[element],
+        oldValue: fileContent1[element],
+        newValue: fileContent2[element],
       };
     }
-    if (!_.has(file2, element)) {
+    if (!_.has(fileContent2, element)) {
       return {
         key: element,
         type: 'removed',
-        oldValue: file1[element],
+        oldValue: fileContent1[element],
         newValue: '',
       };
     }
-    if (file1[element] === file2[element]) {
+    if (fileContent1[element] === fileContent2[element]) {
       return {
         key: element,
         type: 'matched',
-        value: file2[element],
+        value: fileContent2[element],
       };
     }
     return {
       key: element,
       type: 'changed',
-      oldValue: file1[element],
-      newValue: file2[element],
+      oldValue: fileContent1[element],
+      newValue: fileContent2[element],
     };
   });
   return ast;
