@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import getParser from './parsers';
 import buildAST from './buildAst';
-import renderOfData from './renders';
+import renderOfData from './renderers';
 
 const parseFile = (pathFile) => {
   const configPath = pathFile;
