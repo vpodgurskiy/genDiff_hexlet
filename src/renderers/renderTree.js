@@ -23,7 +23,7 @@ export default (ast) => {
       nested: node => `${indent}  ${node.key}: {\n${iter(node.children, spaceCount + 4)}\n${indentForBrace}}`,
       removed: node => `${indent}- ${node.key}: ${stringify(node.value)}`,
       added: node => `${indent}+ ${node.key}: ${stringify(node.newValue)}`,
-      changed: node => [`${indent}+ ${node.key}: ${stringify(node.newValue)}\n${indent}- ${node.key}: ${stringify(node.oldValue)}`],
+      changed: node => [`${indent}+ ${node.key}: ${stringify(node.newValue)}`, `${indent}- ${node.key}: ${stringify(node.oldValue)}`],
       matched: node => `${indent}  ${node.key}: ${stringify(node.value)}`,
     };
 
