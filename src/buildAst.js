@@ -9,21 +9,23 @@ const buildAst = (file1, file2) => {
       return {
         key: element,
         type: 'children',
-        value: buildAst(file1[element], file2[element]),
+        children: buildAst(file1[element], file2[element]),
       };
     }
     if (!_.has(file1, element)) {
       return {
         key: element,
         type: 'added',
-        value: file2[element],
+        oldValue: file1[element],
+        newValue: file2[element],
       };
     }
     if (!_.has(file2, element)) {
       return {
         key: element,
         type: 'removed',
-        value: file1[element],
+        oldValue: file1[element],
+        newValue: '',
       };
     }
     if (file1[element] === file2[element]) {

@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default (ast) => {
   const iter = (data, spaceCount) => {
     const indent = ' '.repeat(spaceCount);
@@ -18,9 +20,9 @@ export default (ast) => {
     };
 
     const constructStringOfNode = {
-      children: node => `${indent}  ${node.key}: {\n${iter(node.value, spaceCount + 4)}\n${indentForBrace}}`,
-      removed: node => `${indent}- ${node.key}: ${constructStringOfValue(node.value)}`,
-      added: node => `${indent}+ ${node.key}: ${constructStringOfValue(node.value)}`,
+      children: node => `${indent}  ${node.key}: {\n${iter(node.children, spaceCount + 4)}\n${indentForBrace}}`,
+      removed: node => `${indent}- ${node.key}: ${constructStringOfValue(node.oldValue)}`,
+      added: node => `${indent}+ ${node.key}: ${constructStringOfValue(node.newValue)}`,
       changed: node => [`${indent}+ ${node.key}: ${constructStringOfValue(node.newValue)}\n${indent}- ${node.key}: ${constructStringOfValue(node.oldValue)}`],
       matched: node => `${indent}  ${node.key}: ${constructStringOfValue(node.value)}`,
     };
@@ -29,7 +31,7 @@ export default (ast) => {
 
     const arr = data.map(c => getNodeString(c));
 
-    return arr.join('\n');
+    return _.flatten(arr).join('\n');
   };
   const renderedData = `{\n${iter(ast, 2)}\n}`;
   return renderedData;

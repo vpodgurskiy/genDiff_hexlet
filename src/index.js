@@ -13,12 +13,12 @@ const parseFile = (pathFile) => {
   return config;
 };
 
-const genDiff = (pathFileBefore, pathFileAfter) => {
+const genDiff = (pathFileBefore, pathFileAfter, type) => {
   const file1 = parseFile(pathFileBefore);
   const file2 = parseFile(pathFileAfter);
 
   const ast = buildAST(file1, file2);
-  const result = renderOfData(ast);
+  const result = renderOfData(ast, type);
 
   return result;
 };
